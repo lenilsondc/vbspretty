@@ -772,7 +772,7 @@ var vbsparser = function vbsparser_(options) {
           while (tokenTypes[++n] !== 'NEWLINE') {
             if (!(tokenTypes[n] === 'WHITESPACE' || tokenTypes[n] ===
                 'COMMENT')) {
-              curTokenType = 'IF_ELSE_ONE_LINE';
+              tokenTypes[n] = 'IF_ELSE_ONE_LINE';
               break;
             }
           }
@@ -822,9 +822,10 @@ var vbsparser = function vbsparser_(options) {
       }
     }
   })();
-  console.log(tokenTypes);
+
+  return {
+    tokens: tokens,
+    tokenTypes: tokenTypes
+  };
 };
-//test
-vbsparser({
-  source: 'Dim i\n i = 0\nIf i = 0 Then\n i = i+1\n End If'
-});
+module.exports = vbsparser;
