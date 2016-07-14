@@ -11,14 +11,36 @@ var vbspretty = function vbspretty_(options){
     (function vbspretty_beautify_options(){
       options.tokens = tparsed.tokens || [];
       options.tokenTypes = tparsed.tokenTypes || [];
-      options.level = options.level && /^d+$/.test(options.level) ? options.level : 0;
+      options.level = options.level && /^\d+$/.test(options.level) ? parseInt(options.level) : 0;
+      options.indentChar = options.indentChar ? options.indentChar.ToString() : '  ';
+      options.breakLineChar = options.breakLineChar ? options.breakLineChar.ToString() : '\n';
     })();
-
-    return beautify(options);
   })();
+console.log(options.tokenTypes)
+  return beautify(options);
 };
 
 
 //test
-var bsource = vbspretty({ source: 'Dim i\n i = 0\nIf i = 0 Then\n i = i+1\n End If'});
-console.log(vbspretty);
+var bsource = vbspretty({
+  level: 1,
+  source: `If i = 0 Then j = 0
+  Dim i, j
+  i = 0
+  If i = 0 Then
+  i = i+1
+  End If
+
+
+
+  FOR i = 0 to 10
+    SELECT CASE j
+    case 10:
+      case 11:
+j = 10
+      CASE ELSE:
+      j = 11
+    End Select
+  Next
+`});
+console.log(bsource)

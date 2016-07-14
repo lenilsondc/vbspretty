@@ -3,237 +3,236 @@ var vbsparser = function vbsparser_(options) {
     tokens = [],
     tokenTypes = [],
     tokenTable = {
-      "Step": "STEP",
-      "Class": "CLASS",
-      "Const": "CONST",
-      "Function": "FUNCTION",
-      "Property": "PROPERTY",
-      "Sub": "SUB",
-      "Goto": "GOTO",
-      "Xor": "BINARY_OPERATOR",
-      "Or": "BINARY_OPERATOR",
-      "And": "BINARY_OPERATOR",
-      "Not": "BINARY_OPERATOR",
-      "Eqv": "BINARY_OPERATOR",
-      "Imp": "BINARY_OPERATOR",
-      "=": "COMPARISON_OPERATOR",
-      "<=": "COMPARISON_OPERATOR",
-      ">=": "COMPARISON_OPERATOR",
-      "<>": "COMPARISON_OPERATOR",
-      "Is": "COMPARISON_OPERATOR",
-      "<": "COMPARISON_OPERATOR",
-      ">": "COMPARISON_OPERATOR",
-      "Mod": "ARTHMETIC_OPERATOR",
-      "Dim": "DIM",
-      "ReDim": "REDIM",
-      "Preserve": "PRESERVE",
-      "Public": "PUBLIC",
-      "Private": "PRIVATE",
-      "Default": "DEFAULT",
-      "Next": "FOR_LOOP_NEXT",
-      "Nothing": "OBJECT_NOTHING",
-      "Null": "VALUE_NULL",
-      "True": "VALUE_TRUE",
-      "False": "VALUE_FALSE",
-      "Empty": "VALUE_EMPTY",
-      "ByVal": "BYVAL",
-      "ByRef": "BYREF",
-      "Select": "SELECT",
-      "Case": "CASE",
-      "If": "IF",
-      "Else": "ELSE",
-      "ElseIf": "ELSE_IF",
-      "Exit": "EXIT",
-      "End": "END",
-      "Then": "THEN",
-      "Err": "ERR",
-      "RegExp": "REGEXP",
-      "Call": "CALL",
-      "Erase": "ERASE",
-      "With": "WITH",
-      "Stop": "STOP",
-      "On": "ON",
-      "Error": "ERROR",
-      "Resume": "RESUME",
-      "Option": "OPTION",
-      "Explicit": "EXPLICIT",
-      "Do": "DO_LOOP",
-      "While": "WHILE_LOOP",
-      "Wend": "WHILE_LOOP_WEND",
-      "Until": "DO_LOOP_UNTIL",
-      "Loop": "DO_LOOP_END",
-      "For": "FOR_LOOP",
-      //"Each": "eac",
-      "To": "FOR_LOOP_TO",
-      "In": "FOR_LOOP_IN",
-      "Set": "SET_OPERATOR",
-      "New": "NEW_OPERATOR",
-      "Abs": "VBSCRIPT_FUNCTION",
-      "Array": "VBSCRIPT_FUNCTION",
-      "Asc": "VBSCRIPT_FUNCTION",
-      "Atn": "VBSCRIPT_FUNCTION",
-      "CBool": "VBSCRIPT_FUNCTION",
-      "CByte": "VBSCRIPT_FUNCTION",
-      "CCur": "VBSCRIPT_FUNCTION",
-      "CDate": "VBSCRIPT_FUNCTION",
-      "CDbl": "VBSCRIPT_FUNCTION",
-      "Chr": "VBSCRIPT_FUNCTION",
-      "CInt": "VBSCRIPT_FUNCTION",
-      "CLng": "VBSCRIPT_FUNCTION",
-      "Conversions": "VBSCRIPT_FUNCTION",
-      "Cos": "VBSCRIPT_FUNCTION",
-      "CreateObject": "VBSCRIPT_FUNCTION",
-      "CSng": "VBSCRIPT_FUNCTION",
-      "CStr": "VBSCRIPT_FUNCTION",
-      "Date": "VBSCRIPT_FUNCTION",
-      "DateAdd": "VBSCRIPT_FUNCTION",
-      "DateDiff": "VBSCRIPT_FUNCTION",
-      "DatePart": "VBSCRIPT_FUNCTION",
-      "DateSerial": "VBSCRIPT_FUNCTION",
-      "DateValue": "VBSCRIPT_FUNCTION",
-      "Day": "VBSCRIPT_FUNCTION",
-      "Derived Math": "VBSCRIPT_FUNCTION",
-      "Escape": "VBSCRIPT_FUNCTION",
-      "Eval": "VBSCRIPT_FUNCTION",
-      "Exp": "VBSCRIPT_FUNCTION",
-      "Filter": "VBSCRIPT_FUNCTION",
-      "FormatCurrency": "VBSCRIPT_FUNCTION",
-      "FormatDateTime": "VBSCRIPT_FUNCTION",
-      "FormatNumber": "VBSCRIPT_FUNCTION",
-      "FormatPercent": "VBSCRIPT_FUNCTION",
-      "GetLocale": "VBSCRIPT_FUNCTION",
-      "GetObject": "VBSCRIPT_FUNCTION",
-      "GetRef": "VBSCRIPT_FUNCTION",
-      "Hex": "VBSCRIPT_FUNCTION",
-      "Hour": "VBSCRIPT_FUNCTION",
-      "InputBox": "VBSCRIPT_FUNCTION",
-      "InStr": "VBSCRIPT_FUNCTION",
-      "InStrRev": "VBSCRIPT_FUNCTION",
-      "Int, Fix": "VBSCRIPT_FUNCTION",
-      "IsArray": "VBSCRIPT_FUNCTION",
-      "IsDate": "VBSCRIPT_FUNCTION",
-      "IsEmpty": "VBSCRIPT_FUNCTION",
-      "IsNull": "VBSCRIPT_FUNCTION",
-      "IsNumeric": "VBSCRIPT_FUNCTION",
-      "IsObject": "VBSCRIPT_FUNCTION",
-      "Join": "VBSCRIPT_FUNCTION",
-      "LBound": "VBSCRIPT_FUNCTION",
-      "LCase": "VBSCRIPT_FUNCTION",
-      "Left": "VBSCRIPT_FUNCTION",
-      "Len": "VBSCRIPT_FUNCTION",
-      "LoadPicture": "VBSCRIPT_FUNCTION",
-      "Log": "VBSCRIPT_FUNCTION",
-      "LTrim": "VBSCRIPT_FUNCTION",
-      "Maths": "VBSCRIPT_FUNCTION",
-      "Mid": "VBSCRIPT_FUNCTION",
-      "Minute": "VBSCRIPT_FUNCTION",
-      "Month": "VBSCRIPT_FUNCTION",
-      "MonthName": "VBSCRIPT_FUNCTION",
-      "MsgBox": "VBSCRIPT_FUNCTION",
-      "Now": "VBSCRIPT_FUNCTION",
-      "Oct": "VBSCRIPT_FUNCTION",
-      "Replace": "VBSCRIPT_FUNCTION",
-      "RGB": "VBSCRIPT_FUNCTION",
-      "Right": "VBSCRIPT_FUNCTION",
-      "Rnd": "VBSCRIPT_FUNCTION",
-      "Round": "VBSCRIPT_FUNCTION",
-      "RTrim": "VBSCRIPT_FUNCTION",
-      "ScriptEngine": "VBSCRIPT_FUNCTION",
-      "ScriptEngineBuildVersion": "VBSCRIPT_FUNCTION",
-      "ScriptEngineMajorVersion": "VBSCRIPT_FUNCTION",
-      "ScriptEngineMinorVersion": "VBSCRIPT_FUNCTION",
-      "Second": "VBSCRIPT_FUNCTION",
-      "SetLocale": "VBSCRIPT_FUNCTION",
-      "Sgn": "VBSCRIPT_FUNCTION",
-      "Sin": "VBSCRIPT_FUNCTION",
-      "Space": "VBSCRIPT_FUNCTION",
-      "Split": "VBSCRIPT_FUNCTION",
-      "Sqr": "VBSCRIPT_FUNCTION",
-      "StrComp": "VBSCRIPT_FUNCTION",
-      "String": "VBSCRIPT_FUNCTION",
-      "StrReverse": "VBSCRIPT_FUNCTION",
-      "Tan": "VBSCRIPT_FUNCTION",
-      "Time": "VBSCRIPT_FUNCTION",
-      "Timer": "VBSCRIPT_FUNCTION",
-      "TimeSerial": "VBSCRIPT_FUNCTION",
-      "TimeValue": "VBSCRIPT_FUNCTION",
-      "Trim": "VBSCRIPT_FUNCTION",
-      "TypeName": "VBSCRIPT_FUNCTION",
-      "UBound": "VBSCRIPT_FUNCTION",
-      "UCase": "VBSCRIPT_FUNCTION",
-      "Unescape": "VBSCRIPT_FUNCTION",
-      "VarType": "VBSCRIPT_FUNCTION",
-      "Weekday": "VBSCRIPT_FUNCTION",
-      "WeekdayName": "VBSCRIPT_FUNCTION",
-      "Year": "VBSCRIPT_FUNCTION",
-      "vbCr": "VBSCRIPT_CONSTANT_STRING",
-      "VbCrLf": "VBSCRIPT_CONSTANT_STRING",
-      "vbFormFeed": "VBSCRIPT_CONSTANT_STRING",
-      "vbLf": "VBSCRIPT_CONSTANT_STRING",
-      "vbNewLine": "VBSCRIPT_CONSTANT_STRING",
-      "vbNullChar": "VBSCRIPT_CONSTANT_STRING",
-      "vbNullString": "VBSCRIPT_CONSTANT_STRING",
-      "vbTab": "VBSCRIPT_CONSTANT_STRING",
-      "vbVerticalTab": "VBSCRIPT_CONSTANT_STRING",
-      "vbEmpty": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbNull": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbInteger": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbLong": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbSingle": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbDouble": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbCurrency": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbDate": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbString": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbObject": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbError": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbBoolean": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbVariant": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbDataObject": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbDecimal": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbByte": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbArray": "VBSCRIPT_CONSTANT_VARTYPE",
-      "vbUseDefault": "VBSCRIPT_CONSTANT_TRISTATE",
-      "vbTrue": "VBSCRIPT_CONSTANT_TRISTATE",
-      "vbFalse": "VBSCRIPT_CONSTANT_TRISTATE",
-      "vbOKOnly": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbOKCancel": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbAbortRetryIgnore": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbYesNoCancel": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbYesNo": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbRetryCancel": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbCritical": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbQuestion": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbExclamation": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbInformation": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbDefaultButton1": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbDefaultButton2": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbDefaultButton3": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbDefaultButton4": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbApplicationModal": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbSystemModal": "VBSCRIPT_CONSTANT_MSGBOX",
-      "vbOK": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbCancel": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbAbort": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbRetry": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbIgnore": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbYes": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbNo": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL",
-      "vbObjectError": "VBSCRIPT_CONSTANT_ERROR",
-      "vbGeneralDate": "VBSCRIPT_CONSTANT_DATEFORMAT",
-      "vbLongDate": "VBSCRIPT_CONSTANT_DATEFORMAT",
-      "vbShortDate": "VBSCRIPT_CONSTANT_DATEFORMAT",
-      "vbLongTime": "VBSCRIPT_CONSTANT_DATEFORMAT",
-      "vbShortTime": "VBSCRIPT_CONSTANT_DATEFORMAT",
-      "vbBinaryCompare": "VBSCRIPT_CONSTANT_COMPARE",
-      "vbTextCompare": "VBSCRIPT_CONSTANT_COMPARE",
-      "vbBlack": "VBSCRIPT_CONSTANT_COLOR",
-      "vbRed": "VBSCRIPT_CONSTANT_COLOR",
-      "vbGreen": "VBSCRIPT_CONSTANT_COLOR",
-      "vbYellow": "VBSCRIPT_CONSTANT_COLOR",
-      "vbBlue": "VBSCRIPT_CONSTANT_COLOR",
-      "vbMagenta": "VBSCRIPT_CONSTANT_COLOR",
-      "vbCyan": "VBSCRIPT_CONSTANT_COLOR",
-      "vbWhite": "VBSCRIPT_CONSTANT_COLOR",
+      "step": { "label": "Step", "type": "STEP"},
+      "class": { "label": "Class", "type": "CLASS"},
+      "const": { "label": "Const", "type": "CONST"},
+      "function": { "label": "Function", "type": "FUNCTION"},
+      "property": { "label": "Property", "type": "PROPERTY"},
+      "sub": { "label": "Sub", "type": "SUB"},
+      "goto": { "label": "Goto", "type": "GOTO"},
+      "xor": { "label": "Xor", "type": "BINARY_OPERATOR"},
+      "or": { "label": "Or", "type": "BINARY_OPERATOR"},
+      "and": { "label": "And", "type": "BINARY_OPERATOR"},
+      "not": { "label": "Not", "type": "BINARY_OPERATOR"},
+      "eqv": { "label": "Eqv", "type": "BINARY_OPERATOR"},
+      "imp": { "label": "Imp", "type": "BINARY_OPERATOR"},
+      "=": { "label": "=", "type": "COMPARISON_OPERATOR"},
+      "<=": { "label": "<=", "type": "COMPARISON_OPERATOR"},
+      ">=": { "label": ">=", "type": "COMPARISON_OPERATOR"},
+      "<>": { "label": "<>", "type": "COMPARISON_OPERATOR"},
+      "is": { "label": "Is", "type": "COMPARISON_OPERATOR"},
+      "<": { "label": "<", "type": "COMPARISON_OPERATOR"},
+      ">": { "label": ">", "type": "COMPARISON_OPERATOR"},
+      "mod": { "label": "Mod", "type": "ARTHMETIC_OPERATOR"},
+      "dim": { "label": "Dim", "type": "DIM"},
+      "redim": { "label": "ReDim", "type": "REDIM"},
+      "preserve": { "label": "Preserve", "type": "PRESERVE"},
+      "public": { "label": "Public", "type": "PUBLIC"},
+      "private": { "label": "Private", "type": "PRIVATE"},
+      "default": { "label": "Default", "type": "DEFAULT"},
+      "next": { "label": "Next", "type": "FOR_LOOP_NEXT"},
+      "nothing": { "label": "Nothing", "type": "OBJECT_NOTHING"},
+      "null": { "label": "Null", "type": "VALUE_NULL"},
+      "true": { "label": "True", "type": "VALUE_TRUE"},
+      "false": { "label": "False", "type": "VALUE_FALSE"},
+      "empty": { "label": "Empty", "type": "VALUE_EMPTY"},
+      "byval": { "label": "ByVal", "type": "BYVAL"},
+      "byref": { "label": "ByRef", "type": "BYREF"},
+      "select": { "label": "Select", "type": "SELECT"},
+      "case": { "label": "Case", "type": "CASE"},
+      "if": { "label": "If", "type": "IF"},
+      "else": { "label": "Else", "type": "ELSE"},
+      "elseif": { "label": "ElseIf", "type": "ELSE_IF"},
+      "exit": { "label": "Exit", "type": "EXIT"},
+      "end": { "label": "End", "type": "END"},
+      "then": { "label": "Then", "type": "THEN"},
+      "err": { "label": "Err", "type": "ERR"},
+      "regexp": { "label": "RegExp", "type": "REGEXP"},
+      "call": { "label": "Call", "type": "CALL"},
+      "erase": { "label": "Erase", "type": "ERASE"},
+      "with": { "label": "With", "type": "WITH"},
+      "stop": { "label": "Stop", "type": "STOP"},
+      "on": { "label": "On", "type": "ON"},
+      "error": { "label": "Error", "type": "ERROR"},
+      "resume": { "label": "Resume", "type": "RESUME"},
+      "option": { "label": "Option", "type": "OPTION"},
+      "explicit": { "label": "Explicit", "type": "EXPLICIT"},
+      "do": { "label": "Do", "type": "DO_LOOP"},
+      "while": { "label": "While", "type": "WHILE_LOOP"},
+      "wend": { "label": "Wend", "type": "WHILE_LOOP_WEND"},
+      "until": { "label": "Until", "type": "DO_LOOP_UNTIL"},
+      "loop": { "label": "Loop", "type": "DO_LOOP_END"},
+      "for": { "label": "For", "type": "FOR_LOOP"},
+      "to": { "label": "To", "type": "FOR_LOOP_TO"},
+      "in": { "label": "In", "type": "FOR_LOOP_IN"},
+      "set": { "label": "Set", "type": "SET_OPERATOR"},
+      "new": { "label": "New", "type": "NEW_OPERATOR"},
+      "abs": { "label": "Abs", "type": "VBSCRIPT_FUNCTION"},
+      "array": { "label": "Array", "type": "VBSCRIPT_FUNCTION"},
+      "asc": { "label": "Asc", "type": "VBSCRIPT_FUNCTION"},
+      "atn": { "label": "Atn", "type": "VBSCRIPT_FUNCTION"},
+      "cbool": { "label": "CBool", "type": "VBSCRIPT_FUNCTION"},
+      "cbyte": { "label": "CByte", "type": "VBSCRIPT_FUNCTION"},
+      "ccur": { "label": "CCur", "type": "VBSCRIPT_FUNCTION"},
+      "cdate": { "label": "CDate", "type": "VBSCRIPT_FUNCTION"},
+      "cdbl": { "label": "CDbl", "type": "VBSCRIPT_FUNCTION"},
+      "chr": { "label": "Chr", "type": "VBSCRIPT_FUNCTION"},
+      "cint": { "label": "CInt", "type": "VBSCRIPT_FUNCTION"},
+      "clng": { "label": "CLng", "type": "VBSCRIPT_FUNCTION"},
+      "conversions": { "label": "Conversions", "type": "VBSCRIPT_FUNCTION"},
+      "cos": { "label": "Cos", "type": "VBSCRIPT_FUNCTION"},
+      "createobject": { "label": "CreateObject", "type": "VBSCRIPT_FUNCTION"},
+      "csng": { "label": "CSng", "type": "VBSCRIPT_FUNCTION"},
+      "cstr": { "label": "CStr", "type": "VBSCRIPT_FUNCTION"},
+      "date": { "label": "Date", "type": "VBSCRIPT_FUNCTION"},
+      "dateadd": { "label": "DateAdd", "type": "VBSCRIPT_FUNCTION"},
+      "datediff": { "label": "DateDiff", "type": "VBSCRIPT_FUNCTION"},
+      "datepart": { "label": "DatePart", "type": "VBSCRIPT_FUNCTION"},
+      "dateserial": { "label": "DateSerial", "type": "VBSCRIPT_FUNCTION"},
+      "datevalue": { "label": "DateValue", "type": "VBSCRIPT_FUNCTION"},
+      "day": { "label": "Day", "type": "VBSCRIPT_FUNCTION"},
+      "derived math": { "label": "Derived Math", "type": "VBSCRIPT_FUNCTION"},
+      "escape": { "label": "Escape", "type": "VBSCRIPT_FUNCTION"},
+      "eval": { "label": "Eval", "type": "VBSCRIPT_FUNCTION"},
+      "exp": { "label": "Exp", "type": "VBSCRIPT_FUNCTION"},
+      "filter": { "label": "Filter", "type": "VBSCRIPT_FUNCTION"},
+      "formatcurrency": { "label": "FormatCurrency", "type": "VBSCRIPT_FUNCTION"},
+      "formatdatetime": { "label": "FormatDateTime", "type": "VBSCRIPT_FUNCTION"},
+      "formatnumber": { "label": "FormatNumber", "type": "VBSCRIPT_FUNCTION"},
+      "formatpercent": { "label": "FormatPercent", "type": "VBSCRIPT_FUNCTION"},
+      "getlocale": { "label": "GetLocale", "type": "VBSCRIPT_FUNCTION"},
+      "getobject": { "label": "GetObject", "type": "VBSCRIPT_FUNCTION"},
+      "getref": { "label": "GetRef", "type": "VBSCRIPT_FUNCTION"},
+      "hex": { "label": "Hex", "type": "VBSCRIPT_FUNCTION"},
+      "hour": { "label": "Hour", "type": "VBSCRIPT_FUNCTION"},
+      "inputbox": { "label": "InputBox", "type": "VBSCRIPT_FUNCTION"},
+      "instr": { "label": "InStr", "type": "VBSCRIPT_FUNCTION"},
+      "instrrev": { "label": "InStrRev", "type": "VBSCRIPT_FUNCTION"},
+      "int, fix": { "label": "Int, Fix", "type": "VBSCRIPT_FUNCTION"},
+      "isarray": { "label": "IsArray", "type": "VBSCRIPT_FUNCTION"},
+      "isdate": { "label": "IsDate", "type": "VBSCRIPT_FUNCTION"},
+      "isempty": { "label": "IsEmpty", "type": "VBSCRIPT_FUNCTION"},
+      "isnull": { "label": "IsNull", "type": "VBSCRIPT_FUNCTION"},
+      "isnumeric": { "label": "IsNumeric", "type": "VBSCRIPT_FUNCTION"},
+      "isobject": { "label": "IsObject", "type": "VBSCRIPT_FUNCTION"},
+      "join": { "label": "Join", "type": "VBSCRIPT_FUNCTION"},
+      "lbound": { "label": "LBound", "type": "VBSCRIPT_FUNCTION"},
+      "lcase": { "label": "LCase", "type": "VBSCRIPT_FUNCTION"},
+      "left": { "label": "Left", "type": "VBSCRIPT_FUNCTION"},
+      "len": { "label": "Len", "type": "VBSCRIPT_FUNCTION"},
+      "loadpicture": { "label": "LoadPicture", "type": "VBSCRIPT_FUNCTION"},
+      "log": { "label": "Log", "type": "VBSCRIPT_FUNCTION"},
+      "ltrim": { "label": "LTrim", "type": "VBSCRIPT_FUNCTION"},
+      "maths": { "label": "Maths", "type": "VBSCRIPT_FUNCTION"},
+      "mid": { "label": "Mid", "type": "VBSCRIPT_FUNCTION"},
+      "minute": { "label": "Minute", "type": "VBSCRIPT_FUNCTION"},
+      "month": { "label": "Month", "type": "VBSCRIPT_FUNCTION"},
+      "monthname": { "label": "MonthName", "type": "VBSCRIPT_FUNCTION"},
+      "msgbox": { "label": "MsgBox", "type": "VBSCRIPT_FUNCTION"},
+      "now": { "label": "Now", "type": "VBSCRIPT_FUNCTION"},
+      "oct": { "label": "Oct", "type": "VBSCRIPT_FUNCTION"},
+      "replace": { "label": "Replace", "type": "VBSCRIPT_FUNCTION"},
+      "rgb": { "label": "RGB", "type": "VBSCRIPT_FUNCTION"},
+      "right": { "label": "Right", "type": "VBSCRIPT_FUNCTION"},
+      "rnd": { "label": "Rnd", "type": "VBSCRIPT_FUNCTION"},
+      "round": { "label": "Round", "type": "VBSCRIPT_FUNCTION"},
+      "rtrim": { "label": "RTrim", "type": "VBSCRIPT_FUNCTION"},
+      "scriptengine": { "label": "ScriptEngine", "type": "VBSCRIPT_FUNCTION"},
+      "scriptenginebuildversion": { "label": "ScriptEngineBuildVersion", "type": "VBSCRIPT_FUNCTION"},
+      "scriptenginemajorversion": { "label": "ScriptEngineMajorVersion", "type": "VBSCRIPT_FUNCTION"},
+      "scriptengineminorversion": { "label": "ScriptEngineMinorVersion", "type": "VBSCRIPT_FUNCTION"},
+      "second": { "label": "Second", "type": "VBSCRIPT_FUNCTION"},
+      "setlocale": { "label": "SetLocale", "type": "VBSCRIPT_FUNCTION"},
+      "sgn": { "label": "Sgn", "type": "VBSCRIPT_FUNCTION"},
+      "sin": { "label": "Sin", "type": "VBSCRIPT_FUNCTION"},
+      "space": { "label": "Space", "type": "VBSCRIPT_FUNCTION"},
+      "split": { "label": "Split", "type": "VBSCRIPT_FUNCTION"},
+      "sqr": { "label": "Sqr", "type": "VBSCRIPT_FUNCTION"},
+      "strcomp": { "label": "StrComp", "type": "VBSCRIPT_FUNCTION"},
+      "string": { "label": "String", "type": "VBSCRIPT_FUNCTION"},
+      "strreverse": { "label": "StrReverse", "type": "VBSCRIPT_FUNCTION"},
+      "tan": { "label": "Tan", "type": "VBSCRIPT_FUNCTION"},
+      "time": { "label": "Time", "type": "VBSCRIPT_FUNCTION"},
+      "timer": { "label": "Timer", "type": "VBSCRIPT_FUNCTION"},
+      "timeserial": { "label": "TimeSerial", "type": "VBSCRIPT_FUNCTION"},
+      "timevalue": { "label": "TimeValue", "type": "VBSCRIPT_FUNCTION"},
+      "trim": { "label": "Trim", "type": "VBSCRIPT_FUNCTION"},
+      "typename": { "label": "TypeName", "type": "VBSCRIPT_FUNCTION"},
+      "ubound": { "label": "UBound", "type": "VBSCRIPT_FUNCTION"},
+      "ucase": { "label": "UCase", "type": "VBSCRIPT_FUNCTION"},
+      "unescape": { "label": "Unescape", "type": "VBSCRIPT_FUNCTION"},
+      "vartype": { "label": "VarType", "type": "VBSCRIPT_FUNCTION"},
+      "weekday": { "label": "Weekday", "type": "VBSCRIPT_FUNCTION"},
+      "weekdayname": { "label": "WeekdayName", "type": "VBSCRIPT_FUNCTION"},
+      "year": { "label": "Year", "type": "VBSCRIPT_FUNCTION"},
+      "vbcr": { "label": "vbCr", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbcrlf": { "label": "VbCrLf", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbformfeed": { "label": "vbFormFeed", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vblf": { "label": "vbLf", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbnewline": { "label": "vbNewLine", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbnullchar": { "label": "vbNullChar", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbnullstring": { "label": "vbNullString", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbtab": { "label": "vbTab", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbverticaltab": { "label": "vbVerticalTab", "type": "VBSCRIPT_CONSTANT_STRING"},
+      "vbempty": { "label": "vbEmpty", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbnull": { "label": "vbNull", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbinteger": { "label": "vbInteger", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vblong": { "label": "vbLong", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbsingle": { "label": "vbSingle", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbdouble": { "label": "vbDouble", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbcurrency": { "label": "vbCurrency", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbdate": { "label": "vbDate", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbstring": { "label": "vbString", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbobject": { "label": "vbObject", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vberror": { "label": "vbError", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbboolean": { "label": "vbBoolean", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbvariant": { "label": "vbVariant", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbdataobject": { "label": "vbDataObject", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbdecimal": { "label": "vbDecimal", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbbyte": { "label": "vbByte", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbarray": { "label": "vbArray", "type": "VBSCRIPT_CONSTANT_VARTYPE"},
+      "vbusedefault": { "label": "vbUseDefault", "type": "VBSCRIPT_CONSTANT_TRISTATE"},
+      "vbtrue": { "label": "vbTrue", "type": "VBSCRIPT_CONSTANT_TRISTATE"},
+      "vbfalse": { "label": "vbFalse", "type": "VBSCRIPT_CONSTANT_TRISTATE"},
+      "vbokonly": { "label": "vbOKOnly", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbokcancel": { "label": "vbOKCancel", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbabortretryignore": { "label": "vbAbortRetryIgnore", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbyesnocancel": { "label": "vbYesNoCancel", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbyesno": { "label": "vbYesNo", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbretrycancel": { "label": "vbRetryCancel", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbcritical": { "label": "vbCritical", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbquestion": { "label": "vbQuestion", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbexclamation": { "label": "vbExclamation", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbinformation": { "label": "vbInformation", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbdefaultbutton1": { "label": "vbDefaultButton1", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbdefaultbutton2": { "label": "vbDefaultButton2", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbdefaultbutton3": { "label": "vbDefaultButton3", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbdefaultbutton4": { "label": "vbDefaultButton4", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbapplicationmodal": { "label": "vbApplicationModal", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbsystemmodal": { "label": "vbSystemModal", "type": "VBSCRIPT_CONSTANT_MSGBOX"},
+      "vbok": { "label": "vbOK", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbcancel": { "label": "vbCancel", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbabort": { "label": "vbAbort", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbretry": { "label": "vbRetry", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbignore": { "label": "vbIgnore", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbyes": { "label": "vbYes", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbno": { "label": "vbNo", "type": "VBSCRIPT_CONSTANT_MSGBOX_RETVAL"},
+      "vbobjecterror": { "label": "vbObjectError", "type": "VBSCRIPT_CONSTANT_ERROR"},
+      "vbgeneraldate": { "label": "vbGeneralDate", "type": "VBSCRIPT_CONSTANT_DATEFORMAT"},
+      "vblongdate": { "label": "vbLongDate", "type": "VBSCRIPT_CONSTANT_DATEFORMAT"},
+      "vbshortdate": { "label": "vbShortDate", "type": "VBSCRIPT_CONSTANT_DATEFORMAT"},
+      "vblongtime": { "label": "vbLongTime", "type": "VBSCRIPT_CONSTANT_DATEFORMAT"},
+      "vbshorttime": { "label": "vbShortTime", "type": "VBSCRIPT_CONSTANT_DATEFORMAT"},
+      "vbbinarycompare": { "label": "vbBinaryCompare", "type": "VBSCRIPT_CONSTANT_COMPARE"},
+      "vbtextcompare": { "label": "vbTextCompare", "type": "VBSCRIPT_CONSTANT_COMPARE"},
+      "vbblack": { "label": "vbBlack", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbred": { "label": "vbRed", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbgreen": { "label": "vbGreen", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbyellow": { "label": "vbYellow", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbblue": { "label": "vbBlue", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbmagenta": { "label": "vbMagenta", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbcyan": { "label": "vbCyan", "type": "VBSCRIPT_CONSTANT_COLOR"},
+      "vbwhite": { "label": "vbWhite", "type": "VBSCRIPT_CONSTANT_COLOR"},
     },
     source = options.source || '',
     lastParsedToken = '',
@@ -320,7 +319,7 @@ var vbsparser = function vbsparser_(options) {
           return isSpace(char);
         });
       },
-      nextWord = function vbsparser_tokenizer_nextWord() {
+      readNextWord = function vbsparser_tokenizer_readNextWord() {
         var ch,
           str = '';
         //n = 0;
@@ -408,7 +407,7 @@ var vbsparser = function vbsparser_(options) {
           pushToken(readString(), 'STRING');
           break;
         case '\'':
-          pushToken(readLine, 'COMMENT');
+          pushToken(readLine(), 'COMMENT');
           break;
         case '#':
           read();
@@ -524,11 +523,11 @@ var vbsparser = function vbsparser_(options) {
           word = readAlphaNumeric();
           n = 0;
 
-          if (lastNonWSParsedToken !== 'DOT_OPERATOR' && tokenTable[word] !== undefined) {
+          if (lastNonWSParsedToken !== 'DOT_OPERATOR' && tokenTable[word.toLowerCase()] !== undefined) {
 
             switch (word.toLowerCase()) {
               case 'do':
-                nextWord = nextWord().toLowerCase();
+                nextWord = readNextWord().toLowerCase();
 
                 if (nextWord === 'while') {
                   read(n);
@@ -537,12 +536,12 @@ var vbsparser = function vbsparser_(options) {
                   read(n);
                   pushToken('Do Until', 'DO_LOOP_START_UNTIL');
                 } else {
-                  pushToken(tokenTable[word], word);
+                  pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                 }
 
                 break;
               case 'loop':
-                nextWord = nextWord().toLowerCase();
+                nextWord = readNextWord().toLowerCase();
 
                 if (nextWord === 'while') {
                   read(n);
@@ -554,22 +553,22 @@ var vbsparser = function vbsparser_(options) {
 
                 break;
               case 'for':
-                nextWord = nextWord();
+                nextWord = readNextWord();
 
                 if (nextWord.toLowerCase() === 'each') {
                   read(n);
                   pushToken('For Each', 'FOR_EACHLOOP');
                 } else {
-                  pushToken(tokenTable[word], word);
+                  pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                 }
 
                 break;
               case 'on':
-                nextWord = nextWord();
+                nextWord = readNextWord();
 
                 if (nextWord.toLowerCase() === 'error') {
-                  nextWord1 = nextWord().toLowerCase();
-                  nextWord2 = nextWord().toLowerCase();
+                  nextWord1 = readNextWord().toLowerCase();
+                  nextWord2 = readNextWord().toLowerCase();
 
                   if (nextWord1 === 'resume' && nextWord2 === 'next') {
                     read(n);
@@ -579,35 +578,35 @@ var vbsparser = function vbsparser_(options) {
                     read(n);
                     pushToken('On Error GoTo 0', 'ON_ERROR_GOTO_0');
                   } else {
-                    pushToken(tokenTable[word], word);
+                    pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                   }
                 }
 
                 break;
               case 'case':
-                nextWord = nextWord();
+                nextWord = readNextWord();
 
                 if (nextWord.toLowerCase() === 'else') {
                   read(n);
                   pushToken('Case Else', 'CASE_ELSE');
                 } else {
-                  pushToken(tokenTable[word], word);
+                  pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                 }
 
                 break;
               case 'select':
-                nextWord = nextWord();
+                nextWord = readNextWord();
 
                 if (nextWord.toLowerCase() === 'case') {
                   read(n);
                   pushToken('Select Case', 'SELECT_CASE');
                 } else {
-                  pushToken(word, tokenTable[word]);
+                  pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                 }
 
                 break;
               case 'end':
-                nextWord = nextWord();
+                nextWord = readNextWord();
 
                 switch (nextWord.toLowerCase()) {
                   case 'function':
@@ -645,14 +644,13 @@ var vbsparser = function vbsparser_(options) {
 
                     break;
                   default:
-                    //RecordToken(tokenTable[word], oKeywordsCaseDict[word]);
-                    pushToken(tokenTable[word], word);
+                    pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
 
                     break;
                 }
                 break;
               case 'exit':
-                nextWord = nextWord();
+                nextWord = readNextWord();
 
                 switch (nextWord.toLowerCase()) {
                   case 'function':
@@ -681,14 +679,13 @@ var vbsparser = function vbsparser_(options) {
 
                     break;
                   default:
-                    pushToken(tokenTable[word], word);
+                    pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                     break;
                 }
 
                 break;
               default:
-                //RecordToken(tokenTable[word], oKeywordsCaseDict[word]);
-                pushToken(word, tokenTable[word]);
+                pushToken(tokenTable[word.toLowerCase()].label, tokenTable[word.toLowerCase()].type);
                 break;
             }
           } else {
