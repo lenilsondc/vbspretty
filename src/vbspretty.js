@@ -16,16 +16,16 @@ var vbspretty = function vbspretty_(options){
       options.breakLineChar = options.breakLineChar ? options.breakLineChar.ToString() : '\n';
     })();
   })();
-console.log(options.tokenTypes)
+//console.log(options.tokenTypes)
   return beautify(options);
 };
 
 
 //test
 var bsource = vbspretty({
-  level: 1,
+  level: 2,
   source: `If i = 0 Then j = 0
-  Dim i, j
+Dim i, j
   i = 0
   If i = 0 Then
   i = i+1

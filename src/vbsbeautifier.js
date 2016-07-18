@@ -20,7 +20,7 @@ var vbsbeautifier = function vbsbeautifier_(options) {
             lastToken = null,
             currentLevel = 0,
             bNextLineInContinuation = false,
-            bUseIndent = false,
+            bUseIndent = true,
             staticIndent = options.indentChar.repeat(options.level),
             dynamicIndent = '',
             ignoreWSToken = function(tokenType) {
@@ -40,11 +40,10 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                 ].indexOf(tokenType) !== -1;
             },
             indent = function(level) {
-
               if (!bUseIndent)
-                  return "";
-              bUseIndent = false;
+                  return '';
 
+              bUseIndent = false;
               if (currentLevel + level < 0)
                   return staticIndent + dynamicIndent;
 
@@ -185,7 +184,7 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                 //if next token is new line then lets not add a space after the current token
                 curTokenWSAfter = nextTokenType === 'NEWLINE' ? "" : curTokenWSAfter;
 
-                if (curTokenType != 'NEWLINE' && !ignoreWSToken(curTokenType)) {
+                if (curTokenType !== 'NEWLINE' && !ignoreWSToken(curTokenType)) {
 
                     var nextTokentInpact = setTokenInpact(nextTokenType);
 
@@ -217,11 +216,14 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                         bNextLineInContinuation = true;
                         break;
                     case 'NEWLINE':
-                        if (lastToken !== null && lastNonWSLNParsedToken === 'NEWLINE') {
+
+                        if (lastTokenType !== null && lastNonWSLNParsedToken === 'NEWLINE') {
                             bUseIndent = true;
                             writeCode(indent(curLineIndent) + options.breakLineChar);
-                        } else
-                            writeCode(options.breakLineChar);
+                        } else if(nextTokenType !== 'EOF'){
+                          writeCode(options.breakLineChar);
+                        }
+
                         bUseIndent = true;
                         if (bNextLineInContinuation) {
                             //we need to add some smart identation to make sure the continued line is extra indented
@@ -231,36 +233,39 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                             dynamicIndent = options.indentChar;
                             //indentTabs[length];
                             bNextLineInContinuation = false;
-                        } else
-                            dynamicIndent = "";
+                        } else{
+                            dynamicIndent = '';
+                        }
                         break;
                 }
 
                 currentLevel += curIndentDelta;
 
-                if (curTokenType == 'ELSE' && nextcurTokenType == 'IF')
-                    curTokenWSAfter = options.breakLineChar;
+                if (curTokenType === 'ELSE' && nextTokenType === 'IF'){
+                  curTokenWSAfter = options.breakLineChar;
+                }
 
                 if (isOperator(curTokenType) &&
                     isOperator(lastNonWSParsedToken)) {
                     curTokenWSAfter = "";
                     curTokenWSBefore = "";
 
-                    if (curTokenType == 'BINARY_OPERATOR' && curToken === "Not")
-                        curTokenWSAfter = " ";
+                    if (curTokenType == 'BINARY_OPERATOR' && curToken === "Not"){
+                      curTokenWSAfter = " ";
+                    }
                 }
 
                 if (options.removeComments && curTokenType === 'COMMENT') {
                     //lets not do anything and remove this comment
-                    if (nextcurTokenType === 'NEWLINE') {
+                    if (nextTokenType === 'NEWLINE') {
                         nextTokenType = 'UNKNOWN';
-                        nextToken = "";
+                        tokenType[n] = '';
                     }
                 } else if ((curTokenType !== 'WHITESPACE' && curTokenType !== 'NEWLINE')) {
                     writeCode(indent(curLineIndent) + curTokenWSBefore + curToken + curTokenWSAfter);
                 }
 
-                if (curTokenType === 'ELSE' && nextTokenType == 'IF') {
+                if (curTokenType === 'ELSE' && nextTokenType === 'IF') {
                     //if have a mistaken else if and not ElseIf. Need to make sure
                     //we add a new line to it
                     bUseIndent = true;
@@ -289,14 +294,13 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                 writeToken();
             }
 
-
             lastTokenType = tokenTypes[i];
 
-            if (lastTokenType != 'WHITESPACE' && lastTokenType != 'NEWLINE') {
+            if (lastTokenType !== 'WHITESPACE' && lastTokenType !== 'NEWLINE') {
                 lastNonWSParsedToken = lastTokenType;
             }
 
-            if (lastNonWSParsedToken != 'WHITESPACE') {
+            if (lastNonWSParsedToken !== 'WHITESPACE') {
                 lastNonWSLNParsedToken = lastTokenType;
             }
         }

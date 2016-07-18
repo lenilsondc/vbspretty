@@ -715,7 +715,8 @@ var vbsparser = function vbsparser_(options) {
       curTokenType = null,
       nextToken = null,
       skipToToken = function vbsparser_analizer_skipToToken(tokenType) {
-        while (n < lTokens && tokenType[n++] !== tokenType);
+
+        while (n < lTokens && tokenTypes[++n] !== tokenType);
       },
       skipToEndOfStatement = function vbsparser_analizer_skipToEndOfStatement(fn) {
         var
@@ -765,11 +766,11 @@ var vbsparser = function vbsparser_(options) {
 
       switch (curTokenType) {
         case 'IF':
-          skipToToken('THEN');
+          skipToToken('THEN')
           while (tokenTypes[++n] !== 'NEWLINE') {
             if (!(tokenTypes[n] === 'WHITESPACE' || tokenTypes[n] ===
                 'COMMENT')) {
-              tokenTypes[n] = 'IF_ELSE_ONE_LINE';
+              tokenTypes[i] = 'IF_ELSE_ONE_LINE';
               break;
             }
           }
@@ -810,7 +811,7 @@ var vbsparser = function vbsparser_(options) {
 
       lastTokenType = tokenTypes[i];
 
-      if (lastTokenType != 'WHITESPACE' && lastTokenType != 'NEWLINE') {
+      if (lastTokenType !== 'WHITESPACE' && lastTokenType !== 'NEWLINE') {
         lastNonWSParsedToken = lastTokenType;
       }
 
