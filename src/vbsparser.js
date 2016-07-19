@@ -245,6 +245,7 @@ var vbsparser = function vbsparser_(options) {
         lastNonWSParsedToken = tokenType;
     };
 
+
   //Lexical Analysis
   (function vbsparser_tokenizer() {
     var
@@ -266,7 +267,7 @@ var vbsparser = function vbsparser_(options) {
         return false;
       },
       isAlphaNumeric = function vbsparser_tokenizer_isAlphaNumeric(char) {
-        return char !== -1 && /[a-zA-Z0-9]/.test(char);
+        return char !== -1 && /[a-zA-Z0-9_]/.test(char);
       },
       isDigit = function vbsparser_tokenizer_isDigit(char) {
         return /[0-9]/.test(char);
@@ -306,7 +307,8 @@ var vbsparser = function vbsparser_(options) {
         var n = 0,
           str = '',
           peeked;
-        while ((peeked = charAt(index + n)) !== -1 && !isEOLorEOF(peeked) &&
+
+        while ((peeked = charAt(index + n)) !== -1 && !(isEOLorEOF(peeked)) &&
           fn(peeked, buffer, index)) {
           n++;
         }
@@ -337,13 +339,19 @@ var vbsparser = function vbsparser_(options) {
         return str;
       },
       readString = function vbsparser_tokenizer_readString() {
-        return readTill(function(char) {
-          return char === "\"" && prevChar() !== "\""
+        var str = read();
+
+        str += readTill(function(char) {
+          return char !== "\"";
         });
+
+        str += read();
+
+        return str;
       },
       readLine = function vbsparser_tokenizer_readLine() {
         return readTill(function(char) {
-          return isEOLorEOF(char);
+          return !isEOLorEOF(char);
         });
       },
       readAlphaNumeric = function vbsparser_tokenizer_readAlphaNumeric() {
@@ -351,19 +359,23 @@ var vbsparser = function vbsparser_(options) {
           return isAlphaNumeric(char);
         });
       },
-      readNumber = function vbsparser_tokenizer_readNumber(char) {
+      readNumber = function vbsparser_tokenizer_readNumber() {
         var str = '';
+
         str += readTill(function(chr) {
           return isDigit(chr);
         });
-        if (nextChar() === '.') str += read();
+
+        if (currentChar() === '.') str += read();
+
         if (str.length === 0) return '';
         str += readTill(function(chr) {
           return isDigit(chr);
         });
-        if (nextChar() === 'e' || nextChar() === 'E') {
+
+        if (currentChar() === 'e' || currentChar() === 'E') {
           str += read();
-          if (nextChar() === '+' || nextChar() === '-') str += read();
+          if (currentChar() === '+' || currentChar() === '-') str += read();
           str += readTill(function(chr) {
             return isDigit(chr);
           });
@@ -373,13 +385,12 @@ var vbsparser = function vbsparser_(options) {
 
     var
       curChar,
-      nextChar,
+      nextChr,
       ch,
       word;
 
     while ((ch = currentChar()) !== -1) {
       word = '';
-
       switch (ch) {
         /*case '~':
         case ';':
@@ -407,6 +418,7 @@ var vbsparser = function vbsparser_(options) {
           pushToken(readString(), 'STRING');
           break;
         case '\'':
+
           pushToken(readLine(), 'COMMENT');
           break;
         case '#':
@@ -445,11 +457,11 @@ var vbsparser = function vbsparser_(options) {
           pushToken(read(), 'ARTHMETIC_OPERATOR');
           break;
         case '<':
-          nextChar = nextChar();
+          nextChr = nextChar();
 
-          if (nextChar === '>') {
+          if (nextChr === '>') {
             pushToken(read(2), 'COMPARISON_OPERATOR');
-          } else if (nextChar === '=') {
+          } else if (nextChr === '=') {
             pushToken(read(2), 'COMPARISON_OPERATOR');
           } else {
             pushToken(read(), 'COMPARISON_OPERATOR');
@@ -457,9 +469,9 @@ var vbsparser = function vbsparser_(options) {
 
           break;
         case '>':
-          nextChar = nextChar();
+          nextChr = nextChar();
 
-          if (nextChar === '=') {
+          if (nextChr === '=') {
             pushToken(read(2), 'COMPARISON_OPERATOR');
           } else {
             pushToken(read(), 'COMPARISON_OPERATOR');
@@ -467,9 +479,9 @@ var vbsparser = function vbsparser_(options) {
 
           break;
         case '&':
-          nextChar = nextChar();
+          nextChr = nextChar();
 
-          if (nextChar === 'H' || nextChar === 'h') {
+          if (nextChr === 'H' || nextChr === 'h') {
             //this is a hexa decimal value
             pushToken(read() + readAlphaNumeric(), 'HEXNUMBER');
           } else {
@@ -478,9 +490,9 @@ var vbsparser = function vbsparser_(options) {
 
           break;
         case '.':
-          nextChar = nextChar();
+          nextChr = nextChar();
 
-          if (isDigit(nextChar)) {
+          if (isDigit(nextChr)) {
             pushToken(readNumber(), 'NUMBER');
           } else {
             //record dot operator
@@ -786,7 +798,7 @@ var vbsparser = function vbsparser_(options) {
         case 'CLASS':
           skipToToken('UNKNOWN');
 
-          tokens[n] = 'CLASS_NAME';
+          tokenTypes[n] = 'CLASS_NAME';
 
           break;
         case 'REDIM':

@@ -182,7 +182,7 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                 curTokenWSAfter = currentTokentInpact.WSAfter;
 
                 //if next token is new line then lets not add a space after the current token
-                curTokenWSAfter = nextTokenType === 'NEWLINE' ? "" : curTokenWSAfter;
+                curTokenWSAfter = nextTokenType === 'NEWLINE' ? '' : curTokenWSAfter;
 
                 if (curTokenType !== 'NEWLINE' && !ignoreWSToken(curTokenType)) {
 
@@ -194,7 +194,7 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                     nextTokenWSAfter = nextTokentInpact.WSAfter;
 
                     //Let's make sure we don't merge two different tokens because of spacing
-                    if (curTokenWSAfter == "" && nextTokenWSBefore == "") {
+                    if (curTokenWSAfter === '' && nextTokenWSBefore === '') {
                         switch (nextTokenType) {
                             case 'NEWLINE':
                             case 'DOT_OPERATOR':
@@ -204,10 +204,16 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                             case 'EOF':
                                 break;
                             default:
-                                curTokenWSAfter = " ";
+                                curTokenWSAfter = ' ';
                                 break;
                         }
 
+                    }
+
+                    // make sure that multiple BINARY_OPERATOR in chain
+                    // will not create double spaces
+                    if(curTokenWSAfter === ' ' && nextTokenWSBefore === ' '){
+                      curTokenWSAfter = ''
                     }
                 }
 
@@ -247,10 +253,10 @@ var vbsbeautifier = function vbsbeautifier_(options) {
 
                 if (isOperator(curTokenType) &&
                     isOperator(lastNonWSParsedToken)) {
-                    curTokenWSAfter = "";
-                    curTokenWSBefore = "";
+                    /*curTokenWSAfter = "";
+                    curTokenWSBefore = "";*/
 
-                    if (curTokenType == 'BINARY_OPERATOR' && curToken === "Not"){
+                    if (curTokenType === 'BINARY_OPERATOR' && curToken === "Not"){
                       curTokenWSAfter = " ";
                     }
                 }
@@ -258,8 +264,8 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                 if (options.removeComments && curTokenType === 'COMMENT') {
                     //lets not do anything and remove this comment
                     if (nextTokenType === 'NEWLINE') {
-                        nextTokenType = 'UNKNOWN';
-                        tokenType[n] = '';
+                        tokens[n] = '';
+                        tokenTypes[n] = 'UNKNOWN';
                     }
                 } else if ((curTokenType !== 'WHITESPACE' && curTokenType !== 'NEWLINE')) {
                     writeCode(indent(curLineIndent) + curTokenWSBefore + curToken + curTokenWSAfter);
