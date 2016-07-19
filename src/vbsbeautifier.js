@@ -103,6 +103,7 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                               WSAfter = " ";
                               break;
                           case 'THEN':
+                              break;
                           case 'STATEMENT_CONTINUATION':
                               WSBefore = " ";
                               WSAfter = " ";

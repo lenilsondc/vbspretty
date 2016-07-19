@@ -23,9 +23,11 @@ var vbspretty = function vbspretty_(options){
   return beautify(options);
 };
 
+module.exports = vbspretty;
 
-//test
-(function (fs) {
+// tests
+
+/*(function (fs) {
 
   fs.readFile('./input.vbs', 'utf8', function (err,data) {
     if (err) {
@@ -43,4 +45,4 @@ var vbspretty = function vbspretty_(options){
 
     console.log(bsource)
   });
-})(require('fs'));
+})(require('fs'));*/
