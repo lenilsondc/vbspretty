@@ -561,6 +561,8 @@ var vbsparser = function vbsparser_(options) {
                 } else if (nextWord === 'until') {
                   read(n);
                   pushToken('Loop Until', 'DO_LOOP_END_UNTIL');
+                }else {
+                  pushToken('Loop', 'DO_LOOP_END');
                 }
 
                 break;
