@@ -157,12 +157,20 @@ var vbsbeautifier = function vbsbeautifier_(options) {
                               WSAfter = " ";
                               indent = 1;
                               lineIndent = -1;
+                              break;                              
+                          case 'DO_LOOP':
+                              WSAfter = "";
+                              indent = 1;
+                              lineIndent = -1;
                               break;
                           case 'FOR_LOOP_NEXT':
                           case 'DO_LOOP_END':
+                          case 'WHILE_LOOP_WEND':
+                              indent = -1;
+                              WSAfter = "";
+                              break;                              
                           case 'DO_LOOP_END_UNTIL':
                           case 'DO_LOOP_END_WHILE':
-                          case 'WHILE_LOOP_WEND':
                               indent = -1;
                               WSAfter = " ";
                               break;
