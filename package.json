@@ -1,5 +1,5 @@
 {
-  "name": "vbspretty",
+  "name": "@vbsnext/vbs-pretty",
   "version": "0.0.1",
   "description": "A VBScript parser and beautifier",
   "main": "./src/vbspretty",
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lenilsondc/vbspretty.git"
+  },
+  "bin": {
+    "vbs-pretty": "vbs-pretty.cmd"
   },
   "keywords": [
     "vbs",

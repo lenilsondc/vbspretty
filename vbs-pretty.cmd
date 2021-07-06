@@ -1,0 +1,1 @@
+call node %dp0%\..\@vbsnext\vbs-pretty\cli.js %*

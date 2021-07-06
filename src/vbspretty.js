@@ -26,7 +26,7 @@ var vbspretty = function vbspretty_(options){
       }
     }
     
-    require('fs').writeFileSync('./bundle-parsed.json', JSON.stringify(tparsed, null, 2));
+    // require('fs').writeFileSync('./bundle-parsed.json', JSON.stringify(tparsed, null, 2));
 
     (function vbspretty_beautify_options(){
       options.tokens = tparsed.tokens || [];
