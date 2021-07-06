@@ -7,7 +7,26 @@ var vbspretty = function vbspretty_(options){
 
   options = options || {};
   (function vbspretty_beautify(){
-    var tparsed = parse(options);
+    var tparsedTemp = parse(options);
+
+    // Combine any consecutive "STRING" items into one String
+    var tparsed = {};
+    tparsed.tokens = [];
+    tparsed.tokenTypes = [];
+    for(i = 0; i<tparsedTemp.tokens.length; i++) {
+      let tkn = tparsedTemp.tokens[i];
+      let tknType = tparsedTemp.tokenTypes[i];
+      if (tknType === "STRING" && tparsed.tokenTypes[tparsed.tokenTypes.length-1] === "STRING") {
+        // console.log('tparsed.tokenTypes.length:', tparsed.tokenTypes.length, i)
+        // console.log("tparsed.tokenTypes[tparsed.tokenTypes.length-1]:", tparsed.tokenTypes[tparsed.tokenTypes.length-1])
+        tparsed.tokens[tparsed.tokenTypes.length-1] += tkn;
+      } else {
+        tparsed.tokens.push(tkn);
+        tparsed.tokenTypes.push(tknType);
+      }
+    }
+    
+    require('fs').writeFileSync('./bundle-parsed.json', JSON.stringify(tparsed, null, 2));
 
     (function vbspretty_beautify_options(){
       options.tokens = tparsed.tokens || [];
