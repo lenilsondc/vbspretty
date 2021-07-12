@@ -339,14 +339,23 @@ var vbsparser = function vbsparser_(options) {
         return str;
       },
       readString = function vbsparser_tokenizer_readString() {
-        var str = read();
+        var n = 1,
+          str = '',
+          peeked;
 
-        str += readTill(function(char) {
-          return char !== "\"";
-        });
-
-        str += read();
-
+        while ((peeked = charAt(index + n)) !== -1 && !(isEOLorEOF(peeked))) {
+          if(peeked !== '\"'){
+            str += peeked;
+          } else if (charAt(index + n + 1) === '\"') {
+            n++;
+          } else {
+            n++;
+            break;
+          }
+          n++;
+        }
+        if (n === 0) return '';
+        str = read(n);
         return str;
       },
       readLine = function vbsparser_tokenizer_readLine() {
