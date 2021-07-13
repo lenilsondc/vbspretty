@@ -24,25 +24,3 @@ var vbspretty = function vbspretty_(options){
 };
 
 module.exports = vbspretty;
-
-// tests
-
-/*(function (fs) {
-
-  fs.readFile('./input.vbs', 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-
-    var bsource = vbspretty({
-      level: 1,
-      indentChar: '\t',
-      breakLineChar: '\r\n',
-      breakOnSeperator: false,
-      removeComments: false,
-      source: data
-    });
-
-    console.log(bsource)
-  });
-})(require('fs'));*/
