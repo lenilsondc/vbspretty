@@ -1,6 +1,6 @@
 {
   "name": "vbspretty",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A VBScript parser and beautifier",
   "main": "./src/vbspretty",
   "bin": {
