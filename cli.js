@@ -9,7 +9,7 @@ var outFile = inFile;
 
 for (var i = 0; i < argv.length; i++) {
   var arg = argv[i];
-  var option = arg.substring(2); //remove -- prefix
+  var option = arg.replace('--', '');
 
   switch (option) {
     case 'level':
@@ -23,7 +23,7 @@ for (var i = 0; i < argv.length; i++) {
       break;
     case 'indentChar':
       var value = argv[++i];
-      if (/(\ +|\\t)/.test(value)) {
+      if (/^(\ +|\\t)$/.test(value)) {
         options[option] = value.replace('\\t', '\t');
       } else {
         console.error("Option '" + option + "' accepts tabs or spaces, got '" + value + "' instead");
@@ -32,10 +32,10 @@ for (var i = 0; i < argv.length; i++) {
       break;
     case 'breakLineChar':
       var value = argv[++i];
-      if (/(\\n|\\r\\n)/) {
+      if (/^(\\n|\\r\\n)$/.test(value)) {
         options[option] = value.replace('\\n', '\n').replace('\\r', '\r');
       } else {
-        console.error("Option '" + option + "' accepts \n or \r\n only, got '" + value + "' instead");
+        console.error("Option '" + option + "' accepts \\n or \\r\\n only, got '" + value + "' instead");
         process.exit(3);
       }
       break;
@@ -55,7 +55,7 @@ for (var i = 0; i < argv.length; i++) {
       }
       break;
     default:
-      console.warn("Option '" + i + "' is not valid, will be ignored.");
+      console.warn("Option '" + option + "' is not valid, will be ignored.");
   }
 }
 
