@@ -1,5 +1,6 @@
-# vbspretty
-VBScript parser and beautifier as a node module
+# vbspretty [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/lenilsondc/vbspretty/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/vbspretty.svg?style=flat)](https://www.npmjs.com/package/vbspretty) 
+
+A sophisticated VBScript parser and beautifier powered by nodejs.
 
 ## Usage
 
