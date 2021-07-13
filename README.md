@@ -10,7 +10,7 @@ npm i vbspretty
 As command-line (See command line options at [CLI](#cli-usage))
 
 ```shell
-npx vbspretty ./src/MyUnformattedFile.vbs
+npx vbspretty ./MyApp.vbs
 ```
 
 ### Nodejs usage
@@ -19,7 +19,7 @@ npx vbspretty ./src/MyUnformattedFile.vbs
 const fs = require('fs');
 const vbspretty = require('vbspretty');
 
-const source = fs.readFileSync('./MyUnformattedFile.vbs').toString();
+const source = fs.readFileSync('./MyApp.vbs').toString();
 
 var sourcePretty = vbspretty({
   level: 0,
@@ -27,7 +27,7 @@ var sourcePretty = vbspretty({
   breakLineChar: '\r\n',
   breakOnSeperator: false,
   removeComments: false,
-  source: fs.readFileSync('./MyApp.vbs').toString()
+  source: source,
 });
 
 fs.writeFileSync('./MyAppPretty.vbs', sourcePretty);
@@ -40,7 +40,7 @@ Cli accepts all options from the [api](#api) plus an `--output` option to provid
 First param should always be the input file and it's mandatory, other params are optionals to configure vbspretty options. See full example bellow.
 
 ```shell
-vbspretty input.vbs --level 0 --indentChar "\t" --breakLineChar "\r\n" --breakOnSeperator --removeComments --output ./out2.vbs
+vbspretty MyApp.vbs --level 0 --indentChar "\t" --breakLineChar "\r\n" --breakOnSeperator --removeComments --output ./MyAppPretty.vbs
 ```
 
 ## API
